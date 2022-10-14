@@ -27,7 +27,7 @@
         "args": [
           "--runTestsByPath",
           "--config",
-          "jest.config.itest.ts"
+          "jest.config.itest.js"
         ],
         "console": "integratedTerminal",
         "internalConsoleOptions": "neverOpen",

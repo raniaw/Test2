@@ -1,8 +1,9 @@
 
+import * as axios from 'axios';
 import { HTTP_CODES, SessionToken, UserCredentials } from '../app/Models/ServerModels';
 import { UserCredentialsDbAccess } from "../app/Authorization/UserCredentialsDbAccess";
 
-const axios = require("axios");
+//const axios = require("axios");
 axios.default.defaults.validateStatus = function () {
     return true;
 }
@@ -16,24 +17,24 @@ const itestUserCredentials: UserCredentials = {
 describe('Server itest suite', () => {
     let userCredentialsDBAccess: UserCredentialsDbAccess;
     let sessionToken: SessionToken;
-
+ 
     beforeAll(() => {
         userCredentialsDBAccess = new UserCredentialsDbAccess();
     })
 
-    /* 
-    const testIfServerReachable = await serverReachable() ? test : test.skip;
+    //not work without async >>> describe('Server itest suite', () => {
+    //const testIfServerReachable = await serverReachable() ? test : test.skip;
 
     test('server reachable', async () => {
         await serverReachable();
     })
     
-    */
+    /// don't forget server to start >>>> npm server
     test('server reachable', async () => {
         const response = await axios.default.options(serverUrl);
         expect(response.status).toBe(HTTP_CODES.OK);
-    });
-    test.skip('put credentials inside database', async () => {
+    }); 
+    test('put credentials inside database', async () => {
         await userCredentialsDBAccess.putUserCredential(itestUserCredentials);
     });
     test('reject invalid credentials', async () => {
@@ -46,7 +47,7 @@ describe('Server itest suite', () => {
         );
         expect(response.status).toBe(HTTP_CODES.NOT_fOUND);
     });
-
+   
     test('login successful with correct credentials', async () => {
         const response = await axios.default.post(
             (serverUrl + '/login'),
